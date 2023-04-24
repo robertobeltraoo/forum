@@ -1,4 +1,4 @@
-import { graphql } from './database/config/graphql';
+import { graphql } from './config/graphql';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
