@@ -9,9 +9,7 @@ export class CodePostResolver {
   constructor(private readonly codePostService: CodePostService) {}
 
   @Mutation(() => CodePost)
-  createCodePost(
-    @Args('createCodePostInput') createCodePostInput: CreateCodePostInput,
-  ) {
+  createCodePost(@Args('createCodePostInput') createCodePostInput: CreateCodePostInput) {
     return this.codePostService.create(createCodePostInput);
   }
 
@@ -26,13 +24,8 @@ export class CodePostResolver {
   }
 
   @Mutation(() => CodePost)
-  updateCodePost(
-    @Args('updateCodePostInput') updateCodePostInput: UpdateCodePostInput,
-  ) {
-    return this.codePostService.update(
-      updateCodePostInput.id,
-      updateCodePostInput,
-    );
+  updateCodePost(@Args('updateCodePostInput') updateCodePostInput: UpdateCodePostInput) {
+    return this.codePostService.update(updateCodePostInput.id, updateCodePostInput);
   }
 
   @Mutation(() => CodePost)
