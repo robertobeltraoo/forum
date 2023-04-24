@@ -10,6 +10,6 @@ import { ForumComponent } from './forum.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
 })
 export class ForumModule { }
