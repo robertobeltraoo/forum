@@ -38,9 +38,7 @@ module.exports = {
         field: 'updated_at',
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
-        defaultValue: Sequelize.literal(
-          'CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()',
-        ),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()'),
       },
 
       deletedAt: {
@@ -51,7 +49,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, _Sequelize) => {
+  down: async (queryInterface, Sequelize) => {
     return queryInterface.dropTable('users');
   },
 };

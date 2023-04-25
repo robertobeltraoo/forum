@@ -1,6 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UserModule } from '../../user/user.module';
+import { UserModule } from '../modules/user/user.module';
 
 export const graphql = GraphQLModule.forRoot<ApolloDriverConfig>({
   driver: ApolloDriver,
