@@ -90,8 +90,45 @@ describe('UserService', () => {
   });
 
   describe('findAll users', () => {
-    it('', async () => {
-      expect(true).toBe(true);
+    it('should findAll users', async () => {
+      mockRepository.findAll.mockResolvedValueOnce([mockUser]);
+      const result = await service.findAll();
+      expect(result).toEqual([mockUser]);
+    });
+
+    it('should throw error', async () => {
+      mockRepository.findAll.mockRejectedValueOnce(new Error());
+      await service.findAll().catch((error) => {
+        expect(error).toBeInstanceOf(HttpException);
+        expect(error.message).toEqual('Falha ao buscar usuários.');
+        expect(error.status).toEqual(HttpStatus.BAD_REQUEST);
+      });
+    });
+  });
+
+  describe('findOne User', () => {
+    it('should findOne user', async () => {
+      mockRepository.findByPk.mockResolvedValueOnce(mockUser);
+      const result = await service.findOne(mockUser.id);
+      expect(result).toEqual(mockUser);
+    });
+  });
+
+  it('should throw not exists', async () => {
+    mockRepository.findByPk.mockResolvedValueOnce(null);
+    await service.findOne(mockUser.id).catch((error) => {
+      expect(error).toBeInstanceOf(HttpException);
+      expect(error.message).toEqual('Usuário não encontrado.');
+      expect(error.status).toEqual(HttpStatus.NOT_FOUND);
+    });
+  });
+
+  it('should throw error', async () => {
+    mockRepository.findByPk.mockRejectedValueOnce(new Error());
+    await service.findOne(mockUser.id).catch((error) => {
+      expect(error).toBeInstanceOf(HttpException);
+      expect(error.message).toEqual('Falha ao buscar usuário.');
+      expect(error.status).toEqual(HttpStatus.BAD_REQUEST);
     });
   });
 });

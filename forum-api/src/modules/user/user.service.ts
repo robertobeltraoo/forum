@@ -48,7 +48,12 @@ export class UserService {
     try {
       const user = await this.userModel.findByPk(id);
       if (!user) {
-        throw new Error('Usuário não encontrado');
+        throw new HttpException(
+          {
+            message: 'Usuário não encontrado.',
+          },
+          HttpStatus.NOT_FOUND
+        );
       }
       return user;
     } catch (error) {
@@ -63,7 +68,12 @@ export class UserService {
     try {
       const user = await this.userModel.findByPk(updateDto.id);
       if (!user) {
-        throw new Error('Usuário não encontrado');
+        throw new HttpException(
+          {
+            message: 'Usuário não encontrado.',
+          },
+          HttpStatus.NOT_FOUND
+        );
       }
 
       if (updateDto?.password && updateDto?.comparePassword) {
@@ -85,7 +95,12 @@ export class UserService {
     try {
       const user = await this.userModel.findByPk(id);
       if (!user) {
-        throw new Error('Usuário não encontrado');
+        throw new HttpException(
+          {
+            message: 'Usuário não encontrado.',
+          },
+          HttpStatus.NOT_FOUND
+        );
       }
       await user.destroy();
       return { message: 'Usuário deletado com sucesso' };
