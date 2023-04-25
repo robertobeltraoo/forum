@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { IUser } from '../../shared/interfaces/user';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -67,8 +67,8 @@ export class UserService {
       }
 
       if (updateDto?.password && updateDto?.comparePassword) {
-        bcryptjs.compare(updateDto.comparePassword, user.password);
-        updateDto.password = await bcryptjs.hash(updateDto.password, 10);
+        bcrypt.compare(updateDto.comparePassword, user.password);
+        updateDto.password = await bcrypt.hash(updateDto.password, 10);
         delete updateDto?.comparePassword;
       }
       const updatedUser = await user.update(Object.assign(user, updateDto));

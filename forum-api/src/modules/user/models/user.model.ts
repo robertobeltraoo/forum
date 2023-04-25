@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { BeforeCreate, Column, DefaultScope, Model, Table } from 'sequelize-typescript';
 import { IUser } from '../../../shared/interfaces/user';
 
@@ -32,10 +32,10 @@ export class User extends Model<User> implements IUser {
 
   @BeforeCreate
   static async beforeCreateHook(user: User): Promise<void> {
-    user.password = await bcryptjs.hash(user.password, 10);
+    user.password = await bcrypt.hash(user.password, 10);
   }
 
   comparePassword(attempt: string): Promise<boolean> {
-    return bcryptjs.compare(attempt, this.password);
+    return bcrypt.compare(attempt, this.password);
   }
 }
