@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { IUser } from '../../shared/interfaces/user';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -76,11 +76,20 @@ export class UserService {
         );
       }
 
-      if (updateDto?.password && updateDto?.comparePassword) {
-        bcrypt.compare(updateDto.comparePassword, user.password);
+      if (updateDto?.password && updateDto?.oldPassword) {
+        const correctPassword = await user.comparePassword(updateDto.oldPassword);
+        if (!correctPassword) {
+          throw new HttpException(
+            {
+              message: 'Senha incorreta.',
+            },
+            HttpStatus.BAD_REQUEST
+          );
+        }
         updateDto.password = await bcrypt.hash(updateDto.password, 10);
-        delete updateDto?.comparePassword;
+        delete updateDto?.oldPassword;
       }
+
       const updatedUser = await user.update(Object.assign(user, updateDto));
       return updatedUser;
     } catch (error) {
@@ -93,7 +102,7 @@ export class UserService {
 
   async remove(id: number): Promise<{ message: string }> {
     try {
-      const user = await this.userModel.findByPk(id);
+      const user: User | null = await this.userModel.findByPk(id);
       if (!user) {
         throw new HttpException(
           {
@@ -103,7 +112,7 @@ export class UserService {
         );
       }
       await user.destroy();
-      return { message: 'Usuário deletado com sucesso' };
+      return { message: 'Usuário deletado com sucesso.' };
     } catch (error) {
       const { message, status } = error;
       const statusCode = status || HttpStatus.BAD_REQUEST;
