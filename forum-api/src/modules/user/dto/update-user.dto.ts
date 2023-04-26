@@ -29,7 +29,7 @@ export class UpdateUserDto {
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsString({ message: 'Senha: Precisa ser uma string.' })
-  @MinLength(8, { message: 'Senha: Precisa ter pelo menos 8 caracteres.' })
-  comparePassword?: string;
+  @IsString({ message: 'Senha antiga: Precisa ser uma string.' })
+  @MinLength(8, { message: 'Senha antiga: Precisa ter pelo menos 8 caracteres.' })
+  oldPassword?: string;
 }
