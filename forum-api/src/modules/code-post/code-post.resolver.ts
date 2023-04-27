@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CodePostService } from './code-post.service';
-import { CodePost } from './entities/code-post.entity';
-import { CreateCodePostInput } from './dto/create-code-post.input';
-import { UpdateCodePostInput } from './dto/update-code-post.input';
+import { CodePost } from './models/code-post.model';
+import { CreateCodePostInput } from './dto/create-code-post.dto';
+import { UpdateCodePostInput } from './dto/update-code-post.dto';
 
 @Resolver(() => CodePost)
 export class CodePostResolver {

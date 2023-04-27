@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCodePostInput } from './dto/create-code-post.input';
-import { UpdateCodePostInput } from './dto/update-code-post.input';
+import { CreateCodePostInput } from './dto/create-code-post.dto';
+import { UpdateCodePostInput } from './dto/update-code-post.dto';
 
 @Injectable()
 export class CodePostService {
